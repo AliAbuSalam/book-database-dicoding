@@ -70,6 +70,7 @@ addBookForm.addEventListener('submit', function(event){
   }
   bookList.push(newBook);
   saveListToStorage();
+  renderBookView(bookList);
 });
 
 addBookForm.addEventListener('change', function(){
