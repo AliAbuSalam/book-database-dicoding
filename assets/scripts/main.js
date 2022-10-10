@@ -6,15 +6,26 @@ const penulisInput = document.getElementById('penulisInput');
 const tahunInput = document.getElementById('tahunInput');
 const selesaiDibacaCheckbox = document.getElementById('alreadyReadCheckbox');
 
-function loadInitialBookList(){
+function checkStorage(){
   if(typeof (Storage) === 'undefined'){
     alert('Browser anda tidak mendukung web storage!');
-    return;
+    return false;
   }
+  return true;
+}
+function loadInitialBookList(){
+  if(!checkStorage()) return;
   return JSON.parse(localStorage.getItem(BOOK_LIST_KEY)) || [];
 }
 
 let bookList = loadInitialBookList();
+
+function saveListToStorage(){
+  if(!checkStorage()) return;
+  localStorage.setItem(BOOK_LIST_KEY, JSON.stringify(bookList));
+  console.log('localStorage: ', JSON.parse(localStorage.getItem(BOOK_LIST_KEY)));
+}
+
 
 addBookForm.addEventListener('submit', function(event){
   event.preventDefault();
@@ -26,6 +37,7 @@ addBookForm.addEventListener('submit', function(event){
     isComplete: selesaiDibacaCheckbox.checked
   }
   bookList.push(newBook);
+  saveListToStorage();
 });
 
 addBookForm.addEventListener('change', function(){
