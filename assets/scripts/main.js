@@ -26,7 +26,6 @@ function saveListToStorage(){
 }
 
 function renderBookView(bookList){
-  console.log('bookList: ', bookList);
   const isNotCompletedBookListView = document.getElementById('isNotCompletedBookList');
   isNotCompletedBookListView.innerHTML = '';
   const isNotCompletedBookList = bookList.filter(book => !book.isComplete);
@@ -81,6 +80,5 @@ addBookForm.addEventListener('change', function(){
 });
 
 document.addEventListener('DOMContentLoaded', function(){
-  console.log('dom content loaded');
   renderBookView(bookList);
 })
