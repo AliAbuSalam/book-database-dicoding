@@ -1,0 +1,168 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+header {
+  background-color: #c3f8ff;
+  text-align: center;
+}
+
+h1 {
+  padding: 15px;
+  color: #015863;
+}
+
+h2 {
+  margin-bottom: 1em;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+  margin-right: 1rem;
+}
+
+.mainBox {
+  color: #015863;
+  border: 2px solid #ABD9FF;
+  width: 100%;
+  margin: 0.5rem;
+  padding: 10px;
+}
+
+input[type=text], input[type=number] {
+  display: inline;
+  width: 100%;
+  padding: 5px;
+  margin: 5px 0
+}
+
+fieldset {
+  border: none;
+}
+
+.actionButton {
+  float: right;
+  border-radius: 5px;
+  padding: 5px 10px;
+  text-decoration: none;
+  font-size: 1rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.actionButton:disabled {
+  cursor: default;
+}
+
+#tambah {
+  background-color: rgb(38, 207, 38);
+  color: rgb(225, 222, 222);
+}
+
+#tambah:hover:enabled {
+  background-color: white;
+  color: rgb(38, 207, 38);
+  border: 1px solid rgb(38, 207, 38);
+}
+
+#tambah:disabled {
+  background-color: grey;
+}
+
+#edit {
+  background-color: #24A0ED;
+  color: white;
+}
+
+#edit:hover:enabled {
+  background-color: white;
+  color: #24A0ED;
+  border: 1px solid #24A0ED;
+}
+
+#edit:disabled {
+  background-color: grey;
+  color: rgb(206, 203, 203);
+}
+
+#searchBox {
+  width: 100%;
+  grid-column: 1 / span 2;
+}
+
+#cari {
+  float: none;
+  width: 10%;
+  background-color: #24A0ED;
+  color: white;
+}
+
+#cari:hover {
+  background-color: white;
+  color: #24A0ED;
+  border: 1px solid #24A0ED;
+
+}
+
+.searchDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bookItem {
+  border: 5px double #24A0ED;
+  padding: 15px;
+}
+
+.bookItem b {
+  font-size: larger;
+}
+
+.bookItem p{
+  margin-top: 5px;
+}
+
+.itemButtonBox {
+  margin-top: 15px;
+}
+
+#toggleSelesaiDibaca {
+  float: none;
+  background-color: #24A0ED;
+  color: white;
+}
+
+#toggleSelesaiDibaca:hover {
+  background-color: white;
+  color: #24A0ED;
+  border: 1px solid #24A0ED;
+}
+
+#hapusBuku {
+  float: none;
+  background-color: rgb(218, 12, 12);
+  color: white;
+}
+
+#hapusBuku:hover {
+  background-color: white;
+  color: rgb(218, 12, 12);
+  border: 1px solid rgb(218, 12, 12);
+}
+
+#editBuku {
+  background-color: #24A0ED;
+  color: white;
+}
+
+#editBuku:hover {
+  background-color: white;
+  color: #24A0ED;
+  border: 1px solid #24A0ED;
+}
