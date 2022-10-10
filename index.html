@@ -11,7 +11,7 @@
     <main>
       <div class="mainBox">
         <h2>Masukkan Buku Baru</h2>
-        <form>
+        <form id="addBookForm">
           <label>Judul</label>
           <input type="text" id="judulInput">
           <label>Penulis</label>
@@ -21,7 +21,7 @@
           <label>Selesai dibaca</label>
           <input type="checkbox" id="alreadyReadCheckbox">
           <div>
-            <button class="actionButton" id="tambah" type="submit">Tambah</button>
+            <button class="actionButton" id="tambah" type="submit" disabled>Tambah</button>
           </div>
         </form>
       </div>
@@ -55,24 +55,13 @@
       </div>
       <div class="mainBox">
         <h2>Belum selesai dibaca</h2>
-        <div class="bookList">
-          <div class="bookItem">
-            <b>Judul buku</b><br>
-            <p>
-              Penulis: Saya sendiri<br>
-              Tahun: 2022
-            </p>
-            <div class="itemButtonBox">
-              <button class="actionButton itemButton" id="toggleSelesaiDibaca">Selesai dibaca</button>
-              <button class="actionButton itemButton" id="hapusBuku">Hapus buku</button>
-              <button class="actionButton itemButton" id="editBuku">Edit buku</button>
-            </div>
-          </div>
-        </div>
+        <div class="bookList" id="isNotCompletedBookList"></div>
       </div>
       <div class="mainBox">
         <h2>Selesai dibaca</h2>
+        <div class="bookList" id="isCompletedBookList"></div>
       </div>
     </main>
+    <script src="assets/scripts/main.js"></script>
   </body>
 </html>
