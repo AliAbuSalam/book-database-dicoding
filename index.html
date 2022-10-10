@@ -11,7 +11,7 @@
     <main>
       <div class="mainBox">
         <h2>Masukkan Buku Baru</h2>
-        <form>
+        <form id="addBookForm">
           <label>Judul</label>
           <input type="text" id="judulInput">
           <label>Penulis</label>
@@ -21,7 +21,7 @@
           <label>Selesai dibaca</label>
           <input type="checkbox" id="alreadyReadCheckbox">
           <div>
-            <button class="actionButton" id="tambah" type="submit">Tambah</button>
+            <button class="actionButton" id="tambah" type="submit" disabled>Tambah</button>
           </div>
         </form>
       </div>
@@ -74,5 +74,6 @@
         <h2>Selesai dibaca</h2>
       </div>
     </main>
+    <script src="assets/scripts/main.js"></script>
   </body>
 </html>
