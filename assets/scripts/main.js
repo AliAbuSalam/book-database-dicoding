@@ -18,8 +18,14 @@ let bookList = loadInitialBookList();
 
 addBookForm.addEventListener('submit', function(event){
   event.preventDefault();
-
-  console.log('form submitted');
+  const newBook = {
+    id: Date.now(),
+    title: judulInput.value,
+    author: penulisInput.value,
+    year: tahunInput.value,
+    isComplete: selesaiDibacaCheckbox.checked
+  }
+  bookList.push(newBook);
 });
 
 addBookForm.addEventListener('change', function(){
