@@ -23,9 +23,42 @@ let bookList = loadInitialBookList();
 function saveListToStorage(){
   if(!checkStorage()) return;
   localStorage.setItem(BOOK_LIST_KEY, JSON.stringify(bookList));
-  console.log('localStorage: ', JSON.parse(localStorage.getItem(BOOK_LIST_KEY)));
 }
 
+function renderBookView(bookList){
+  console.log('bookList: ', bookList);
+  const isNotCompletedBookListView = document.getElementById('isNotCompletedBookList');
+  isNotCompletedBookListView.innerHTML = '';
+  const isNotCompletedBookList = bookList.filter(book => !book.isComplete);
+
+  const isCompletedBookListView = document.getElementById('isCompletedBookList');
+  isCompletedBookListView.innerHTML = '';
+  const isCompletedBookList = bookList.filter(book => book.isComplete);
+
+  function render(viewContainer, list){
+    for(const book of list){
+      const bookItem = document.createElement('div');
+      bookItem.setAttribute('class', 'bookItem');
+      bookItem.setAttribute('id', book.id);
+      bookItem.innerHTML = 
+      `<b>${book.title}</b><br>
+      <p>
+        Penulis: ${book.author}<br>
+        Tahun: ${book.year}
+      </p>
+      <div class="itemButtonBox">
+        <button class="actionButton itemButton" id="toggleSelesaiDibaca">Selesai dibaca</button>
+        <button class="actionButton itemButton" id="hapusBuku">Hapus buku</button>
+        <button class="actionButton itemButton" id="editBuku">Edit buku</button>
+      </div>
+      `;
+      viewContainer.appendChild(bookItem);
+    }
+  }
+
+  render(isNotCompletedBookListView, isNotCompletedBookList);
+  render(isCompletedBookListView, isCompletedBookList);
+}
 
 addBookForm.addEventListener('submit', function(event){
   event.preventDefault();
@@ -45,4 +78,9 @@ addBookForm.addEventListener('change', function(){
 
   if(judulInput.value && penulisInput.value && tahunInput.value) addBookButton.removeAttribute('disabled');
   else addBookButton.setAttribute('disabled', true);
+});
+
+document.addEventListener('DOMContentLoaded', function(){
+  console.log('dom content loaded');
+  renderBookView(bookList);
 })
