@@ -132,36 +132,36 @@ fieldset {
   margin-top: 15px;
 }
 
-#toggleSelesaiDibaca {
+[id^=toggleSelesaiDibaca] {
   float: none;
   background-color: #24A0ED;
   color: white;
 }
 
-#toggleSelesaiDibaca:hover {
+[id^=toggleSelesaiDibaca]:hover {
   background-color: white;
   color: #24A0ED;
   border: 1px solid #24A0ED;
 }
 
-#hapusBuku {
+[id^=hapusBuku] {
   float: none;
   background-color: rgb(218, 12, 12);
   color: white;
 }
 
-#hapusBuku:hover {
+[id^=hapusBuku]:hover {
   background-color: white;
   color: rgb(218, 12, 12);
   border: 1px solid rgb(218, 12, 12);
 }
 
-#editBuku {
+[id^=editBuku] {
   background-color: #24A0ED;
   color: white;
 }
 
-#editBuku:hover {
+[id^=editBuku]:hover {
   background-color: white;
   color: #24A0ED;
   border: 1px solid #24A0ED;

@@ -34,7 +34,7 @@ function renderBookView(bookList){
   isCompletedBookListView.innerHTML = '';
   const isCompletedBookList = bookList.filter(book => book.isComplete);
 
-  function render(viewContainer, list){
+  function render(viewContainerType, viewContainer, list){
     for(const book of list){
       const bookItem = document.createElement('div');
       bookItem.setAttribute('class', 'bookItem');
@@ -45,18 +45,28 @@ function renderBookView(bookList){
         Penulis: ${book.author}<br>
         Tahun: ${book.year}
       </p>
-      <div class="itemButtonBox">
-        <button class="actionButton itemButton" id="toggleSelesaiDibaca">Selesai dibaca</button>
-        <button class="actionButton itemButton" id="hapusBuku">Hapus buku</button>
-        <button class="actionButton itemButton" id="editBuku">Edit buku</button>
+      <div class='itemButtonBox'>
+        <button class='actionButton itemButton' id='toggleSelesaiDibaca-${book.id}'>
+          ${viewContainerType === 'belum selesai' ? 'Selesai dibaca': 'Belum selesai dibaca'}
+        </button>
+        <button class='actionButton itemButton' id='hapusBuku-${book.id}'>Hapus buku</button>
+        <button class='actionButton itemButton' id='editBuku-${book.id}'>Edit button</button>
       </div>
       `;
       viewContainer.appendChild(bookItem);
     }
   }
 
-  render(isNotCompletedBookListView, isNotCompletedBookList);
-  render(isCompletedBookListView, isCompletedBookList);
+  render('belum selesai', isNotCompletedBookListView, isNotCompletedBookList);
+  render('selesai', isCompletedBookListView, isCompletedBookList);
+  setEventForToggleButton();
+}
+
+function setEventForToggleButton(){
+  const toggleButtons = document.querySelectorAll('[id^=toggleSelesaiDibaca]');
+  for(const button of toggleButtons){
+    button.addEventListener('click', toggleIsComplete);
+  }
 }
 
 addBookForm.addEventListener('submit', function(event){
@@ -84,10 +94,10 @@ document.addEventListener('DOMContentLoaded', function(){
   renderBookView(bookList);
 });
 
-function toggleIsComplete(id){
-  bookList = bookList.map(book => book.id === id ? {
-    ...book,
-    isComplete: !book.isComplete
-  }: book);
+function toggleIsComplete(event){
+  const idSplit = event.target.id.split('-');
+  const id = idSplit[1];
+  bookList = bookList.map(book => book.id === parseInt(id) ? { ...book, isComplete: !book.isComplete}: book);
+  saveListToStorage();
   renderBookView(bookList);
 }
