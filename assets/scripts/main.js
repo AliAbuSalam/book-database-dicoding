@@ -10,6 +10,14 @@ const searchForm = document.getElementById('searchForm');
 const searchInput = document.getElementById('judulSearchInput');
 const cancelSearchButton = document.getElementById('clear');
 
+const editBookForm = document.getElementById('editBookForm');
+const editBookField = document.querySelector('.editFieldSet');
+const judulEditInput = document.getElementById('judulEditInput');
+const penulisEditInput = document.getElementById('penulisEditInput');
+const tahunEditInput = document.getElementById('tahunEditInput');
+const selesaiDibacaEditCheckbox = document.getElementById('alreadyReadEditCheckbox');
+let bookToEditId;
+
 function checkStorage(){
   if(typeof (Storage) === 'undefined'){
     alert('Browser anda tidak mendukung web storage!');
@@ -63,12 +71,12 @@ function renderBookView(bookList, searchFilter = ''){
       viewContainer.appendChild(bookItem);
     }
   }
-
+  showOrHideSearchWarning(searchFilter);
   render('belum selesai', isNotCompletedBookListView, isNotCompletedBookList);
   render('selesai', isCompletedBookListView, isCompletedBookList);
   setEventForElements('[id^=toggleSelesaiDibaca]', 'click', toggleIsComplete);
   setEventForElements('[id^=hapusBuku]', 'click', removeBook);
-  setEventForElements('[id^=editBuku]', 'click', edit)
+  setEventForElements('[id^=editBuku]', 'click', editBook);
 }
 
 function setEventForElements(querySelector, eventType, event){
@@ -102,16 +110,18 @@ addBookForm.addEventListener('submit', function(event){
 searchForm.addEventListener('submit', function(event){
   event.preventDefault();
   const searchInputValue = searchInput.value.trim();
-  const searchWarning = document.getElementById('filterWarning');
-  searchWarning.removeAttribute('hidden');
   renderBookView(bookList, searchInputValue);
 });
+
+function showOrHideSearchWarning(searchFilter){
+  const searchWarning = document.getElementById('filterWarning');
+  if(searchFilter) searchWarning.removeAttribute('hidden');
+  else searchWarning.setAttribute('hidden', true);
+}
 
 cancelSearchButton.addEventListener('click', function(){
   searchForm.reset();
   renderBookView(bookList);
-  const searchWarning = document.getElementById('filterWarning');
-  searchWarning.setAttribute('hidden', true);
 })
 
 addBookForm.addEventListener('change', function(){
@@ -129,24 +139,48 @@ document.addEventListener('DOMContentLoaded', function(){
 
 function getBookId(elementId){
   const idSplit = elementId.split('-');
-  return idSplit[1];
+  return parseInt(idSplit[1]);
 }
 
 function toggleIsComplete(event){
   const id = getBookId(event.target.id);
-  bookList = bookList.map(book => book.id === parseInt(id) ? { ...book, isComplete: !book.isComplete}: book);
+  bookList = bookList.map(book => book.id === id ? { ...book, isComplete: !book.isComplete}: book);
   saveListToStorage();
   renderBookView(bookList);
 }
 
 function removeBook(event){
   const id = getBookId(event.target.id);
-  bookList = bookList.filter(book => book.id !== parseInt(id));
+  bookList = bookList.filter(book => book.id !== id);
   saveListToStorage();
   renderBookView(bookList);
 }
 
 function editBook(event){
   const id = getBookId(event.target.id);
-  console.log('id');
+  // const book = bookList.find(book => book.id === id);
+  // editBookField.removeAttribute('disabled');
+  // setEditField(book);
 }
+
+// function setEditField(book){
+//   bookToEditId = book.id;
+//   judulEditInput.value = book.title;
+//   penulisEditInput.value = book.author;
+//   tahunEditInput.value = book.year;
+//   selesaiDibacaEditCheckbox.checked = book.isComplete;
+// }
+
+// function editBookSubmit(){
+//   if(!bookToEditId) return;
+//   const newBookDetails = {
+//     title: judulEditInput.value,
+//     author: penulisEditInput.value,
+//     year: tahunEditInput.value,
+//     isComplete: selesaiDibacaEditCheckbox.checked
+//   };
+//   bookList = bookList.map(book => book.id === bookToEditId ? newBookDetails: book);
+//   saveListToStorage();
+//   renderBookView(bookList);
+// }
+//editBookForm.addEventListener('submit', );
