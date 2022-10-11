@@ -77,6 +77,12 @@ function setEventForRemoveButton(){
   }
 }
 
+function resetForm(){
+  const addBookButton = document.getElementById('tambah');
+  addBookForm.reset();
+  addBookButton.setAttribute('disabled', true);
+}
+
 addBookForm.addEventListener('submit', function(event){
   event.preventDefault();
   const newBook = {
@@ -89,6 +95,7 @@ addBookForm.addEventListener('submit', function(event){
   bookList.unshift(newBook);
   saveListToStorage();
   renderBookView(bookList);
+  resetForm();
 });
 
 addBookForm.addEventListener('change', function(){
@@ -99,6 +106,7 @@ addBookForm.addEventListener('change', function(){
 });
 
 document.addEventListener('DOMContentLoaded', function(){
+  resetForm();
   renderBookView(bookList);
 });
 
