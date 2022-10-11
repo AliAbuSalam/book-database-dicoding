@@ -55,7 +55,9 @@ function renderBookView(bookList, searchFilter = ''){
           ${viewContainerType === 'belum selesai' ? 'Selesai dibaca': 'Belum selesai dibaca'}
         </button>
         <button class='actionButton itemButton' id='hapusBuku-${book.id}'>Hapus buku</button>
-        <button class='actionButton itemButton' id='editBuku-${book.id}'>Edit button</button>
+        <a href='#editDiv'>
+          <button class='actionButton itemButton' id='editBuku-${book.id}'>Edit button</button>
+        </a>
       </div>
       `;
       viewContainer.appendChild(bookItem);
@@ -64,21 +66,15 @@ function renderBookView(bookList, searchFilter = ''){
 
   render('belum selesai', isNotCompletedBookListView, isNotCompletedBookList);
   render('selesai', isCompletedBookListView, isCompletedBookList);
-  setEventForToggleButton();
-  setEventForRemoveButton();
+  setEventForElements('[id^=toggleSelesaiDibaca]', 'click', toggleIsComplete);
+  setEventForElements('[id^=hapusBuku]', 'click', removeBook);
+  setEventForElements('[id^=editBuku]', 'click', edit)
 }
 
-function setEventForToggleButton(){
-  const toggleButtons = document.querySelectorAll('[id^=toggleSelesaiDibaca]');
-  for(const button of toggleButtons){
-    button.addEventListener('click', toggleIsComplete);
-  }
-}
-
-function setEventForRemoveButton(){
-  const removeButtons = document.querySelectorAll('[id^=hapusBuku]');
-  for(const button of removeButtons){
-    button.addEventListener('click', removeBook);
+function setEventForElements(querySelector, eventType, event){
+  const elements = document.querySelectorAll(querySelector);
+  for(const element of elements){
+    element.addEventListener(eventType, event);
   }
 }
 
@@ -131,18 +127,26 @@ document.addEventListener('DOMContentLoaded', function(){
   renderBookView(bookList);
 });
 
+function getBookId(elementId){
+  const idSplit = elementId.split('-');
+  return idSplit[1];
+}
+
 function toggleIsComplete(event){
-  const idSplit = event.target.id.split('-');
-  const id = idSplit[1];
+  const id = getBookId(event.target.id);
   bookList = bookList.map(book => book.id === parseInt(id) ? { ...book, isComplete: !book.isComplete}: book);
   saveListToStorage();
   renderBookView(bookList);
 }
 
 function removeBook(event){
-  const idSplit = event.target.id.split('-');
-  const id = idSplit[1];
+  const id = getBookId(event.target.id);
   bookList = bookList.filter(book => book.id !== parseInt(id));
   saveListToStorage();
   renderBookView(bookList);
+}
+
+function editBook(event){
+  const id = getBookId(event.target.id);
+  console.log('id');
 }
