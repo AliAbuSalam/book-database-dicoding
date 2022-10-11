@@ -6,6 +6,9 @@ const penulisInput = document.getElementById('penulisInput');
 const tahunInput = document.getElementById('tahunInput');
 const selesaiDibacaCheckbox = document.getElementById('alreadyReadCheckbox');
 
+const searchForm = document.getElementById('searchForm');
+const searchInput = document.getElementById('judulSearchInput');
+
 function checkStorage(){
   if(typeof (Storage) === 'undefined'){
     alert('Browser anda tidak mendukung web storage!');
@@ -25,14 +28,15 @@ function saveListToStorage(){
   localStorage.setItem(BOOK_LIST_KEY, JSON.stringify(bookList));
 }
 
-function renderBookView(bookList){
+function renderBookView(bookList, searchFilter){
+  const filteredBookList = bookList.filter(book => book.title.toLowerCase().startsWith(searchFilter?.toLowerCase() || ''));
   const isNotCompletedBookListView = document.getElementById('isNotCompletedBookList');
   isNotCompletedBookListView.innerHTML = '';
-  const isNotCompletedBookList = bookList.filter(book => !book.isComplete);
+  const isNotCompletedBookList = filteredBookList.filter(book => !book.isComplete);
 
   const isCompletedBookListView = document.getElementById('isCompletedBookList');
   isCompletedBookListView.innerHTML = '';
-  const isCompletedBookList = bookList.filter(book => book.isComplete);
+  const isCompletedBookList = filteredBookList.filter(book => book.isComplete);
 
   function render(viewContainerType, viewContainer, list){
     for(const book of list){
@@ -96,6 +100,12 @@ addBookForm.addEventListener('submit', function(event){
   saveListToStorage();
   renderBookView(bookList);
   resetForm();
+});
+
+searchForm.addEventListener('submit', function(event){
+  event.preventDefault();
+  const searchInputValue = searchInput.value.trim();
+  renderBookView(bookList, searchInputValue);
 });
 
 addBookForm.addEventListener('change', function(){
