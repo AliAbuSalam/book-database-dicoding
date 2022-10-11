@@ -60,12 +60,20 @@ function renderBookView(bookList){
   render('belum selesai', isNotCompletedBookListView, isNotCompletedBookList);
   render('selesai', isCompletedBookListView, isCompletedBookList);
   setEventForToggleButton();
+  setEventForRemoveButton();
 }
 
 function setEventForToggleButton(){
   const toggleButtons = document.querySelectorAll('[id^=toggleSelesaiDibaca]');
   for(const button of toggleButtons){
     button.addEventListener('click', toggleIsComplete);
+  }
+}
+
+function setEventForRemoveButton(){
+  const removeButtons = document.querySelectorAll('[id^=hapusBuku]');
+  for(const button of removeButtons){
+    button.addEventListener('click', removeBook);
   }
 }
 
@@ -98,6 +106,14 @@ function toggleIsComplete(event){
   const idSplit = event.target.id.split('-');
   const id = idSplit[1];
   bookList = bookList.map(book => book.id === parseInt(id) ? { ...book, isComplete: !book.isComplete}: book);
+  saveListToStorage();
+  renderBookView(bookList);
+}
+
+function removeBook(event){
+  const idSplit = event.target.id.split('-');
+  const id = idSplit[1];
+  bookList = bookList.filter(book => book.id !== parseInt(id));
   saveListToStorage();
   renderBookView(bookList);
 }
