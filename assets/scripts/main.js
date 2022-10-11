@@ -86,7 +86,7 @@ addBookForm.addEventListener('submit', function(event){
     year: tahunInput.value,
     isComplete: selesaiDibacaCheckbox.checked
   }
-  bookList.push(newBook);
+  bookList.unshift(newBook);
   saveListToStorage();
   renderBookView(bookList);
 });
