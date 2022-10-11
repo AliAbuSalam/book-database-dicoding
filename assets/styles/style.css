@@ -124,6 +124,10 @@ fieldset {
   gap: 10px;
 }
 
+#filterWarning {
+  color: orange;
+}
+
 .bookItem {
   border: 5px double #24A0ED;
   padding: 15px;

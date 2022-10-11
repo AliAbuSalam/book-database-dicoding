@@ -8,6 +8,7 @@ const selesaiDibacaCheckbox = document.getElementById('alreadyReadCheckbox');
 
 const searchForm = document.getElementById('searchForm');
 const searchInput = document.getElementById('judulSearchInput');
+const cancelSearchButton = document.getElementById('clear');
 
 function checkStorage(){
   if(typeof (Storage) === 'undefined'){
@@ -28,8 +29,8 @@ function saveListToStorage(){
   localStorage.setItem(BOOK_LIST_KEY, JSON.stringify(bookList));
 }
 
-function renderBookView(bookList, searchFilter){
-  const filteredBookList = bookList.filter(book => book.title.toLowerCase().startsWith(searchFilter?.toLowerCase() || ''));
+function renderBookView(bookList, searchFilter = ''){
+  const filteredBookList = bookList.filter(book => book.title.toLowerCase().startsWith(searchFilter?.toLowerCase()));
   const isNotCompletedBookListView = document.getElementById('isNotCompletedBookList');
   isNotCompletedBookListView.innerHTML = '';
   const isNotCompletedBookList = filteredBookList.filter(book => !book.isComplete);
@@ -105,8 +106,17 @@ addBookForm.addEventListener('submit', function(event){
 searchForm.addEventListener('submit', function(event){
   event.preventDefault();
   const searchInputValue = searchInput.value.trim();
+  const searchWarning = document.getElementById('filterWarning');
+  searchWarning.removeAttribute('hidden');
   renderBookView(bookList, searchInputValue);
 });
+
+cancelSearchButton.addEventListener('click', function(){
+  searchForm.reset();
+  renderBookView(bookList);
+  const searchWarning = document.getElementById('filterWarning');
+  searchWarning.setAttribute('hidden', true);
+})
 
 addBookForm.addEventListener('change', function(){
   const addBookButton = document.getElementById('tambah');
@@ -117,6 +127,7 @@ addBookForm.addEventListener('change', function(){
 
 document.addEventListener('DOMContentLoaded', function(){
   resetForm();
+  searchForm.reset();
   renderBookView(bookList);
 });
 
