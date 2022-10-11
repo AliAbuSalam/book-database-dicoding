@@ -116,7 +116,10 @@ searchForm.addEventListener('submit', function(event){
 function showOrHideSearchWarning(searchFilter){
   const searchWarning = document.getElementById('filterWarning');
   if(searchFilter) searchWarning.removeAttribute('hidden');
-  else searchWarning.setAttribute('hidden', true);
+  else {
+    searchWarning.setAttribute('hidden', true);
+    searchInput.value = '';
+  }
 }
 
 cancelSearchButton.addEventListener('click', function(){
@@ -146,8 +149,9 @@ function getBookId(elementId){
 function toggleIsComplete(event){
   const id = getBookId(event.target.id);
   bookList = bookList.map(book => book.id === id ? { ...book, isComplete: !book.isComplete}: book);
+  const searchInputValue = searchInput.value.trim();
   saveListToStorage();
-  renderBookView(bookList);
+  renderBookView(bookList, searchInputValue);
 }
 
 function removeBook(event){
