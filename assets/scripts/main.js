@@ -134,6 +134,7 @@ addBookForm.addEventListener('change', function(){
 document.addEventListener('DOMContentLoaded', function(){
   resetForm();
   searchForm.reset();
+  clearEditField();
   renderBookView(bookList);
 });
 
@@ -158,29 +159,36 @@ function removeBook(event){
 
 function editBook(event){
   const id = getBookId(event.target.id);
-  // const book = bookList.find(book => book.id === id);
-  // editBookField.removeAttribute('disabled');
-  // setEditField(book);
+  const book = bookList.find(book => book.id === id);
+  editBookField.removeAttribute('disabled');
+  setEditField(book);
 }
 
-// function setEditField(book){
-//   bookToEditId = book.id;
-//   judulEditInput.value = book.title;
-//   penulisEditInput.value = book.author;
-//   tahunEditInput.value = book.year;
-//   selesaiDibacaEditCheckbox.checked = book.isComplete;
-// }
+function setEditField(book){
+  bookToEditId = book.id;
+  judulEditInput.value = book.title;
+  penulisEditInput.value = book.author;
+  tahunEditInput.value = book.year;
+  selesaiDibacaEditCheckbox.checked = book.isComplete;
+}
 
-// function editBookSubmit(){
-//   if(!bookToEditId) return;
-//   const newBookDetails = {
-//     title: judulEditInput.value,
-//     author: penulisEditInput.value,
-//     year: tahunEditInput.value,
-//     isComplete: selesaiDibacaEditCheckbox.checked
-//   };
-//   bookList = bookList.map(book => book.id === bookToEditId ? newBookDetails: book);
-//   saveListToStorage();
-//   renderBookView(bookList);
-// }
-//editBookForm.addEventListener('submit', );
+function clearEditField(){
+  editBookForm.reset();
+  editBookField.setAttribute('disabled', true);
+}
+
+function editBookSubmit(){
+  if(!bookToEditId) return;
+  const newBookDetails = {
+    id: bookToEditId,
+    title: judulEditInput.value,
+    author: penulisEditInput.value,
+    year: tahunEditInput.value,
+    isComplete: selesaiDibacaEditCheckbox.checked
+  };
+  bookList = bookList.map(book => book.id === bookToEditId ? newBookDetails: book);
+  saveListToStorage();
+  renderBookView(bookList);
+  clearEditField();
+}
+editBookForm.addEventListener('submit', editBookSubmit);
