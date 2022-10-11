@@ -118,6 +118,7 @@ fieldset {
 .bookItem {
   border: 5px double #24A0ED;
   padding: 15px;
+  margin-bottom: 0.5rem;
 }
 
 .bookItem b {
